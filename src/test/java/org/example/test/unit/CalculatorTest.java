@@ -6,6 +6,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+/**
+ * 단위 테스트
+ */
 class CalculatorTest
 {
 	@DisplayName("두 수가 주어지면 합을 구하는 테스트")

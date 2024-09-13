@@ -6,6 +6,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+/**
+ * Mockito 테스트
+ */
 public class MockitoTest
 {
 

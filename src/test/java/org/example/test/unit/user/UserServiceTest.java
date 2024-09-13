@@ -3,9 +3,6 @@ package org.example.test.unit.user;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
-import org.example.test.unit.user.User;
-import org.example.test.unit.user.UserRepository;
-import org.example.test.unit.user.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +11,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * Mockito 테스트
+ */
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest
 {
