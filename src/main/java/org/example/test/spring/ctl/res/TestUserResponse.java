@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class TestUserResponse
 {
+	private Long id;
 	private String name;
 	private String phoneNo;
 	private String birth;
@@ -16,18 +17,20 @@ public class TestUserResponse
 	private UserStatus userStatus;
 
 	@Builder
-	public TestUserResponse(String name, String gender, String phoneNo, String birth, UserStatus userStatus)
+	public TestUserResponse(Long id, String name, String phoneNo, String birth, String gender, UserStatus userStatus)
 	{
+		this.id = id;
 		this.name = name;
-		this.gender = gender;
 		this.phoneNo = phoneNo;
 		this.birth = birth;
+		this.gender = gender;
 		this.userStatus = userStatus;
 	}
 
 	public static TestUserResponse of(TestUser testUser)
 	{
 		return TestUserResponse.builder()
+				.id(testUser.getId())
 				.name(testUser.getName())
 				.gender(testUser.getGender())
 				.phoneNo(testUser.getPhoneNo())
