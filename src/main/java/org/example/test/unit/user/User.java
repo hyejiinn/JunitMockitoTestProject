@@ -1,4 +1,4 @@
-package org.example.test.unit;
+package org.example.test.unit.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
