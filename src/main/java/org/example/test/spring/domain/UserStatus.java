@@ -5,10 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ParentType
+public enum UserStatus
 {
-	MASTER("마스터 보호자"),
-	SUB("보조 보호자");
+	SERVICE_USER("서비스 사용자"),
+	TERMINATION_USER("서비스 중지 사용자");
 
 	private final String codeDesc;
 }
