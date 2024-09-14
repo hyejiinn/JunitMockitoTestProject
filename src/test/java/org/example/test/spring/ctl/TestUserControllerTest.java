@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc // MockMvc를 자동으로 구성하는 데 사용
 class TestUserControllerTest
 {
 	@Autowired
