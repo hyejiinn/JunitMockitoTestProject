@@ -8,11 +8,13 @@ import org.example.test.spring.ctl.res.TestUserResponse;
 import org.example.test.spring.exception.TestUserNotFound;
 import org.example.test.spring.repository.TestUserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
-@Service
+@Transactional
 @RequiredArgsConstructor
+@Service(value = "testUserService")
 public class TestUserService
 {
 	private final TestUserRepository testUserRepository;
