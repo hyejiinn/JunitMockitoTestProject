@@ -31,8 +31,7 @@ class UserServiceTest
 		Long userId = 1L;
 
 		// When,  Stub : 실제 객체에 가짜 동작을 수행하도록 설정
-		Mockito.when(userRepository.findById(1L))
-				.thenReturn(Optional.of(new User(1L, "hyejin")));
+		Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(new User(1L, "hyejin")));
 
 		// Then : 호출 결과 검증
 		String userName = userService.getUserName(userId);
@@ -43,6 +42,7 @@ class UserServiceTest
 	}
 
 	@Test
+	@DisplayName("없는 id인 사용자의 이름을 조회할 때, RuntimeException 예외가 발생함을 검증하는 테스트")
 	void testExceptionHandling()
 	{
 		// Given
