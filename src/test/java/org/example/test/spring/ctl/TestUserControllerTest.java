@@ -20,6 +20,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * MockMvc 를 활용한 Controller 테스트
+ */
 @SpringBootTest
 @AutoConfigureMockMvc // MockMvc를 자동으로 구성하는 데 사용
 class TestUserControllerTest
@@ -98,7 +102,6 @@ class TestUserControllerTest
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.status").value("OK"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("OK"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("OK"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty());
 
 	}
@@ -117,11 +120,9 @@ class TestUserControllerTest
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.status").value("OK"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("OK"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("OK"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty());
 
 		// verify
 		Mockito.verify(testUserService, Mockito.times(1)).deleteTestUserBy(1L);
 	}
-
 }

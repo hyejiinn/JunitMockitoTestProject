@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * JUnit Test
+ * TestUserService + TestUserRepository 통합 테스트
  */
 @SpringBootTest
 class TestUserServiceTest
