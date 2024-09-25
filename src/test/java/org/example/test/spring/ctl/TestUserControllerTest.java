@@ -5,6 +5,7 @@ import java.util.List;
 import org.example.test.spring.ctl.req.TestUserRequest;
 import org.example.test.spring.ctl.res.TestUserResponse;
 import org.example.test.spring.domain.UserStatus;
+import org.example.test.spring.exception.TestUserNotFound;
 import org.example.test.spring.service.TestUserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ class TestUserControllerTest
 	private ObjectMapper objectMapper;
 
 	@Test
+	@DisplayName("모든 사용자를 조회한다.")
 	void getAllTestUsers() throws Exception
 	{
 	    // given
@@ -57,8 +59,8 @@ class TestUserControllerTest
 	}
 	
 	
-	@DisplayName("id가 1인 사용자를 조회한다.")
 	@Test
+	@DisplayName("id가 1인 사용자를 조회한다.")
 	void getTestUserBy() throws Exception
 	{
 	    // given
@@ -77,13 +79,11 @@ class TestUserControllerTest
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.phoneNo").value("01011112222"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.gender").value("F"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.userStatus").value(UserStatus.SERVICE_USER.toString()))
-
 		;
 	}
 
-
-	@DisplayName("새로운 사용자를 등록한다.")
 	@Test
+	@DisplayName("새로운 사용자를 등록한다.")
 	void createTestUser() throws Exception
 	{
 	    // given
@@ -106,16 +106,16 @@ class TestUserControllerTest
 
 	}
 
-
-	@DisplayName("id가 1인 테스트 사용자를 삭제한다.")
 	@Test
+	@DisplayName("id가 1인 테스트 사용자를 삭제한다.")
 	void deleteTestUserBy() throws Exception
 	{
 	    // given
-		Mockito.doNothing().when(testUserService).deleteTestUserBy(1L);
+		long userId = 1L;
+		Mockito.doNothing().when(testUserService).deleteTestUserBy(userId);
 
 	    // When.. then
-		mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/test-users/{id}",1L))
+		mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/test-users/{id}", userId))
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.status").value("OK"))
@@ -123,6 +123,46 @@ class TestUserControllerTest
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty());
 
 		// verify
-		Mockito.verify(testUserService, Mockito.times(1)).deleteTestUserBy(1L);
+		Mockito.verify(testUserService, Mockito.times(1)).deleteTestUserBy(userId);
+	}
+
+	@Test
+	@DisplayName("이름이 없는 잘못된 데이터로 사용자를 등록할 때 400 에러를 반환한다.")
+	void createTestUser_withInvalidData_shouldReturnBadRequest() throws Exception
+	{
+		// given: 필수 값이 누락된 요청
+		TestUserRequest invalidRequest = TestUserRequest.builder()
+				.name("") // 빈 이름
+				.phoneNo("01012345678")
+				.birth("000101")
+				.gender("M")
+				.build();
+
+		// when.. then
+		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/test-users")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(invalidRequest)))
+				.andDo(MockMvcResultHandlers.print())
+				.andExpect(MockMvcResultMatchers.status().isBadRequest())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.status").value("BAD_REQUEST"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("BAD_REQUEST"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty());
+	}
+
+	@Test
+	@DisplayName("존재하지 않는 사용자 id로 사용자 조회할 때 400 에러를 반환한다.")
+	void getTestUserBy_invalidId_shouldReturnNotFound() throws Exception
+	{
+		// given: 존재하지 않는 ID
+		long userId = 99L;
+		Mockito.when(testUserService.getTestUserBy(userId)).thenThrow(new TestUserNotFound());
+
+		// when.. then
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/test-users/{id}", userId))
+				.andDo(MockMvcResultHandlers.print())
+				.andExpect(MockMvcResultMatchers.status().isBadRequest())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.status").value("BAD_REQUEST"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("BAD_REQUEST"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty());
 	}
 }

@@ -1,0 +1,10 @@
+### 사용자 생성
+POST http://localhost:8080/api/v1/test-users
+Content-Type: application/json
+
+{
+    "name" : "",
+    "gender" : "F",
+    "phoneNo": "01012345678",
+    "birth": "000101"
+}

@@ -30,8 +30,7 @@ class UserServiceTest
 	{
 		// Given
 		Long userId = 1L;
-		Mockito.when(userRepository.findById(1L))
-				.thenReturn(Optional.of(new User(1L, "hyejin")));
+		Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(new User(1L, "hyejin")));
 
 		// When
 		String userName = userService.getUserName(userId);
@@ -49,12 +48,10 @@ class UserServiceTest
 	{
 		// Given
 		Long userId = 2L;
-		Mockito.when(userRepository.findById(2L))
-				.thenThrow(new RuntimeException("no data"));
+		Mockito.when(userRepository.findById(2L)).thenThrow(new RuntimeException("no data"));
 
 		// When, Then : 예외 발생 여부 검증
-		Assertions.assertThatThrownBy(() -> userService.getUserName(userId))
-				.isInstanceOf(RuntimeException.class);
+		Assertions.assertThatThrownBy(() -> userService.getUserName(userId)).isInstanceOf(RuntimeException.class);
 
 		// Verify : Mock 객체의 메서드가 제대로 호출되었는지 검증
 		Mockito.verify(userRepository).findById(2L);
@@ -71,8 +68,8 @@ class UserServiceTest
 		String userName = userService.getUserName(userId);
 
 		// Then: findById가 한 번만 호출되었는지 검증
-		Mockito.verify(userRepository, Mockito.times(1)).findById(userId);
 		Assertions.assertThat(userName).isEqualTo("hyejin");
+		Mockito.verify(userRepository, Mockito.times(1)).findById(userId);
 	}
 
 	@Test
