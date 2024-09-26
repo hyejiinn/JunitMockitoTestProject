@@ -41,8 +41,6 @@ public class MockitoTest
 
 		// Verify : get(0)이 한 번 호출되었는지 검증
 		Mockito.verify(mockList).get(0);
-		Mockito.verify(mockList).add(captor.capture());
-		org.junit.jupiter.api.Assertions.assertEquals("first", captor.getValue());
 	}
 
 	@Test

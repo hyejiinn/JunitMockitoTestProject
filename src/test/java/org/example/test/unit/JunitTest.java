@@ -23,6 +23,6 @@ class JunitTest
 
 		// Then
 		Assertions.assertThat(result).isEqualTo(30); // AssertJ Assertions isEqualTo
-		org.junit.jupiter.api.Assertions.assertEquals(3, result); // Jupiter Assertions assertEquals
+		org.junit.jupiter.api.Assertions.assertEquals(30, result); // Jupiter Assertions assertEquals
 	}
 }

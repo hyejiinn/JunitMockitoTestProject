@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * MockMvc 를 활용한 Controller 테스트
  */
-@SpringBootTest
-@AutoConfigureMockMvc // MockMvc를 자동으로 구성하는 데 사용
+@SpringBootTest // 스프링 환경에서 테스트하기 위한 어노테이션
+@AutoConfigureMockMvc // MockMvc를 자동으로 구성하는 데 사용하는 어노테이션
 class TestUserControllerTest
 {
 	@Autowired
